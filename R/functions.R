@@ -10,7 +10,7 @@ g <- function(l1, l2, t) {
   # calculate a, b from l1, l2 at the start of the g function
   a <- l1 / (l1 + l2)
   b <- l1 + l2
-  return(ifelse(t == Inf, 1, a * (1 - exp(-b * t))))
+  return(ifelse(t == Inf, 1,  a * (1 - exp(-b * t))))
 }
 
 # create.par(): function to create the parameter names which will be used in the mstep expressions
@@ -270,7 +270,22 @@ log.likelihood.h <- function(current_par,  data1, data2, data3, data_int){
   return(sum(llk))
 }
 
-
+# em_function(): combining the E- and M-step and repeating until the parameter estimates converge
+# Input:
+#   - current_theta: initial value for the EM algorithm
+#   - l1_x: vector containing names of covariates used in the lambda_1 (progression rate) parameter (must be column names in data input)
+#   - l2_x: vector containing names of covariates used in the lambda_2 (clearance rate) parameter (must be column names in data input)
+#   - pi_x: vector containing names of covariates used in the pi parameter (must be column names in data input)
+#   - data: first three columns must be (1) left interval, (2) right interval and (3) z indicator for prevalent/incident disease,
+#           following columns must match the column names given in l1_x, l2_x and pi_x
+#   - h: background risk value
+# Output:
+#   - inital.values: inital values, usualy calculated with the find.init() function
+#   - theta.hat: optimum parameter values estimated by the EM algorithm
+#   - num.iterations: number of iterations until algorithm converged
+#   - log.likelihood: value of log.likelihood at optimum parameter values
+#   - hess: hessian matrix (can be used to calculated parameter variances)
+#   - summary: data frame with estimate, std.dev, and 95% CI for each parameter (to be used in data set comparisons)
 em.function.h <- function(init, l1_x, l2_x, pi_x, data, epsilon = 1e-06, silent=T){
 
   n1 <- length(l1_x) + 1
