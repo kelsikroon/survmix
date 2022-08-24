@@ -1,0 +1,17 @@
+Package: CCmixture
+Type: Package
+Title: Competing Cause Mixture Models for Cervical Cancer Screening Data
+Version: 0.1.0
+Author: Kelsi Kroon
+Maintainer: Kelsi Kroon <k.kroon@amsterdamumc.nl>
+Description: This package fits Competing Cause Prevalence-Incidence mixture models to interval-censored cervical cancer screening data and obtains parameter estimates using the gradient EM algorithm.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Config/testthat/edition: 3
