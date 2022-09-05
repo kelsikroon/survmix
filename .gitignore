@@ -1,4 +1,4 @@
-inst/doc
 .Rproj.user
-.Rbuildignore
 .Rhistory
+.RData
+.Ruserdata
