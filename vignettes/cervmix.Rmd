@@ -1,0 +1,20 @@
+---
+title: "cervmix: An `R` Package for Fitting Competing Cause Mixture Models to Cervical Cancer Screening Data "
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{cervmix}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+Information about the function
+```{r setup}
+library(cervmix)
+```
