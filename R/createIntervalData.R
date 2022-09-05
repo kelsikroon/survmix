@@ -1,4 +1,4 @@
-#' Create interval censored data
+#' Creates interval censored data from histology, cytology and HPV screening data
 #'
 #' @param patient_info Data frame containing patient information such as Idwoman, Study, Danasc, Age, Darecl, Arm, DaCens, StCens
 #' @param hist Data frame containing resutls from histological tests for patients. Must have column names Study, Idwoman, VisitHisto, Idhisto, Datehisto, Typehisto, Istorandom, Classhisto.
@@ -8,7 +8,7 @@
 #' @returns A data frame containing the left and right intervals of CIN2+ detection for women who were HPV+ at baseline.
 #' @export
 
-create.interval.data <- function(patient_info, hist, cyt, hpv){
+cervmix.combineData <- function(patient_info, hist, cyt, hpv){
   rownames(patient_info) <- patient_info$Idwoman
 
   hist$Datehisto <- as.Date(hist$Datehisto, "%d-%m-%Y")
