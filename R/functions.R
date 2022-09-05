@@ -280,7 +280,7 @@ log.likelihood.h <- function(current_par,  data1, data2, data3, data_int){
 #           following columns must match the column names given in l1_x, l2_x and pi_x
 #   - h: background risk value
 # Output:
-#   - inital.values: inital values, usualy calculated with the find.init() function
+#   - inital.values: initial values, usually calculated with the find.init() function
 #   - theta.hat: optimum parameter values estimated by the EM algorithm
 #   - num.iterations: number of iterations until algorithm converged
 #   - log.likelihood: value of log.likelihood at optimum parameter values
@@ -394,7 +394,7 @@ short.em.h <- function(l1_x, l2_x, pi_x, data, short.epsilon=1e-1, silent=T){
 #' @author Kelsi Kroon \email{k.kroon@amsterdamumc.nl}
 #' @export
 #'
-simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5){
+cervmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5){
   require(Rlab)
   # Function to simulate data with baseline characteristics
   # Inputs:
@@ -418,7 +418,7 @@ simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5){
   age <- rbern(n, 1/3)
   # Cytology Results: this is an indicator variable so 1 means abnormal cytology and 0 means not abnormal (or unknown for z=NA)
   # if they did not show up for screening at time 0 then their cytology result is 0 because it is unknown
-  cytology <- ifelse(is.na(screening_times$x1), 1, rbern(n, 0.5))
+  cytology <- ifelse(is.na(screening_times$x1), 0, rbern(n, 0.3))
 
   # HPV genotype (HPV 16 or other) - this is an indicator variable so 1 means they have HPV16 and 0 means other HPV type
   hpv <- rbern(n, 1/3)
@@ -518,9 +518,9 @@ simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5){
 #' @examples
 #' sim_dat <- simulator(2000, c("hpv"), c(), c(),
 #'                      c(exp(-5), -3, 2, -2, 0.25), show_prob = 0.9, i=5)
-#' CCmixture.fit(c("hpv"), c(), c(), sim_dat, silent=F)
+#' cervmix.fit(c("hpv"), c(), c(), sim_dat, silent=F)
 
-CCmixture.fit <- function(l1_x, l2_x, pi_x, data, num.runs=30, short.epsilon=1e-1, epsilon=1e-8, silent=T){
+cervmix.fit <- function(l1_x, l2_x, pi_x, data, num.runs=30, short.epsilon=1e-1, epsilon=1e-8, silent=T){
   short.inits <- list()
   for (i in 1:num.runs){
     short.inits[[i]] <- short.em.h(l1_x, l2_x, pi_x, data,  short.epsilon=1e-1, silent)[c("theta.hat", "log.likelihood")]
@@ -543,7 +543,7 @@ CCmixture.fit <- function(l1_x, l2_x, pi_x, data, num.runs=30, short.epsilon=1e-
 #' @param theta.hat Parameter estimates for the model to be used (output from CCmixture.fit)
 #'
 #' @export
-CCmixture.predict <- function(l1_x, l2_x, pi_x, data, time.points, theta.hat){
+cervmix.predict <- function(l1_x, l2_x, pi_x, data, time.points, theta.hat){
   h <- exp(theta.hat[1])
   theta.hat <- theta.hat[-1]
 

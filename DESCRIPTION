@@ -1,4 +1,4 @@
-Package: CCmixture
+Package: cervmix
 Type: Package
 Title: Competing Cause Mixture Models for Cervical Cancer Screening Data
 Version: 0.1.0
