@@ -512,7 +512,6 @@ cervmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5)
 #' \item summary - data frame with estimate, std.dev, and 95\% CI for each parameter (useful for data set comparisons)
 #' }
 #'
-#' @author Kelsi Kroon \email{k.kroon@amsterdamumc.nl}
 #' @export
 #'
 #' @examples
