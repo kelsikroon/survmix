@@ -9,6 +9,7 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+Imports: Rlab, survival, stats
 Suggests: 
     knitr,
     rmarkdown,

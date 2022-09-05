@@ -6,7 +6,6 @@
 #' @param hpv  Data frame containing results from HPV tests for patients
 #'
 #' @returns A data frame containing the left and right intervals of CIN2+ detection for women who were HPV+ at baseline.
-#' @export
 
 cervmix.combineData <- function(patient_info, hist, cyt, hpv){
   rownames(patient_info) <- patient_info$Idwoman

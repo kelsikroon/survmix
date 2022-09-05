@@ -30,6 +30,8 @@ left interval, (2) right interval and (3) z indicator for prevalent/incident dis
 \item{short.epsilon}{Convergence criteria used in the 'Short' EM algorithm to determine initial values. Defaults to 0.1.}
 
 \item{epsilon}{Convergence criteria for the change in log-likelihood value used for stopping the EM algorithm. Defaults to 1e-08.}
+
+\item{silent}{Indicator variable for whether to print out each iteration or not. Default value set to FALSE.}
 }
 \value{
 The output is a list containing the following elements:
@@ -48,10 +50,7 @@ This function fits Competing Cause Prevalence-Incidence mixture models to interv
 It is possible for the user to select the covariates that will be used for each parameter.
 }
 \examples{
-sim_dat <- simulator(2000, c("hpv"), c(), c(),
+sim_dat <- cervmix.simulator(2000, c("hpv"), c(), c(),
                      c(exp(-5), -3, 2, -2, 0.25), show_prob = 0.9, i=5)
-cervmix.fit(c("hpv"), c(), c(), sim_dat, silent=F)
-}
-\author{
-Kelsi Kroon \email{k.kroon@amsterdamumc.nl}
+cervmix.fit(c("hpv"), c(), c(), sim_dat, silent=FALSE)
 }

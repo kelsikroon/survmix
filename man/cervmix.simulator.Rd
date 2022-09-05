@@ -2,7 +2,8 @@
 % Please edit documentation in R/functions.R
 \name{cervmix.simulator}
 \alias{cervmix.simulator}
-\title{Simulator}
+\title{Simulates cervical cancer screening data with user-specified parameters. Useful for validating that the model is able to recover the true parameter values. Currently it is only possible to simulate
+data with the baseline covariates age (older or younger than 40), HPV genotype (HPV16 positive or negative), and cytology (normal/ abnormal).}
 \usage{
 cervmix.simulator(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i = 5)
 }
@@ -26,8 +27,6 @@ A data frame containing the left and right interval of CIN2+ detection, the indi
 HPV genotype (HPV16 or other, 1=HPV16), and cytology result (normal or abnormal, 1=abnormal).
 }
 \description{
-Cervical cancer screening data simulator.
-}
-\author{
-Kelsi Kroon \email{k.kroon@amsterdamumc.nl}
+Simulates cervical cancer screening data with user-specified parameters. Useful for validating that the model is able to recover the true parameter values. Currently it is only possible to simulate
+data with the baseline covariates age (older or younger than 40), HPV genotype (HPV16 positive or negative), and cytology (normal/ abnormal).
 }

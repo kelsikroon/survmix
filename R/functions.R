@@ -374,11 +374,16 @@ short.em.h <- function(l1_x, l2_x, pi_x, data, short.epsilon=1e-1, silent=T){
 }
 
 
-#' Simulator
+#' Simulates cervical cancer screening data
 #'
-#' Cervical cancer screening data simulator.
-#'
-#' @import Rlab
+#' @importFrom stats D na.omit rexp rnorm runif
+#' @importFrom utils tail
+#' @importFrom Rlab rbern
+NULL
+#> NULL
+
+#' Simulates cervical cancer screening data with user-specified parameters. Useful for validating that the model is able to recover the true parameter values. Currently it is only possible to simulate
+#' data with the baseline covariates age (older or younger than 40), HPV genotype (HPV16 positive or negative), and cytology (normal/ abnormal).
 #'
 #' @param n Number of women in the simulated data set.
 #' @param l1_x A vector containing the names of covariates used in the \ifelse{html}{\out{\eqn{\lambda}<sub>1</sub>}}{ \eqn{\lambda_1}} (progression rate) parameter. Options are "age", "HPV16" and "cytology".
@@ -391,11 +396,9 @@ short.em.h <- function(l1_x, l2_x, pi_x, data, short.epsilon=1e-1, silent=T){
 #' @return A data frame containing the left and right interval of CIN2+ detection, the indicator of prevalent disease, age (younger or older than 39, 1=younger),
 #' HPV genotype (HPV16 or other, 1=HPV16), and cytology result (normal or abnormal, 1=abnormal).
 
-#' @author Kelsi Kroon \email{k.kroon@amsterdamumc.nl}
 #' @export
 #'
 cervmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5){
-  require(Rlab)
   # Function to simulate data with baseline characteristics
   # Inputs:
   # n = sample size,
@@ -491,7 +494,7 @@ cervmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5)
 #'
 #' This function fits Competing Cause Prevalence-Incidence mixture models to interval-censored cervical cancer screening data and obtains parameter estimates.
 #' It is possible for the user to select the covariates that will be used for each parameter.
-#' @import survival Rlab ggplot2
+
 #' @param l1_x A vector containing the names of covariates used in the \ifelse{html}{\out{&lambda<sub>1</sub>}}{ \eqn{\lambda_1}} (progression rate) parameter (must match column name(s) in the input data)
 #' @param l2_x A vector containing the names of covariates used in the \ifelse{html}{\out{&lambda<sub>2</sub>}}{ \eqn{\lambda_2}} (clearance rate) parameter (must match column name(s) in the input data)
 #' @param pi_x A vector containing the names of covariates used in the \eqn{\pi} parameter (probability of prevalent disease) (must match column name(s) in the input data)
@@ -500,7 +503,7 @@ cervmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5)
 #' @param num.runs Number of runs of the 'Short' EM algorithm used to determine initial values for the EM algorithm. Defaults to 30.
 #' @param short.epsilon Convergence criteria used in the 'Short' EM algorithm to determine initial values. Defaults to 0.1.
 #' @param epsilon Convergence criteria for the change in log-likelihood value used for stopping the EM algorithm. Defaults to 1e-08.
-
+#' @param silent Indicator variable for whether to print out each iteration or not. Default value set to FALSE.
 #' @return The output is a list containing the following elements:
 #' \itemize{
 #' \item initial.values - initial values determined by the Short EM algorithm process
@@ -515,9 +518,9 @@ cervmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5)
 #' @export
 #'
 #' @examples
-#' sim_dat <- simulator(2000, c("hpv"), c(), c(),
+#' sim_dat <- cervmix.simulator(2000, c("hpv"), c(), c(),
 #'                      c(exp(-5), -3, 2, -2, 0.25), show_prob = 0.9, i=5)
-#' cervmix.fit(c("hpv"), c(), c(), sim_dat, silent=F)
+#' cervmix.fit(c("hpv"), c(), c(), sim_dat, silent=FALSE)
 
 cervmix.fit <- function(l1_x, l2_x, pi_x, data, num.runs=30, short.epsilon=1e-1, epsilon=1e-8, silent=T){
   short.inits <- list()
@@ -533,7 +536,6 @@ cervmix.fit <- function(l1_x, l2_x, pi_x, data, num.runs=30, short.epsilon=1e-1,
 
 
 #' Competing Cause Prevalence-Incidence Mixture Model Predictions
-#'
 #' @param l1_x A vector containing the names of covariates used in the \ifelse{html}{\out{\eqn{\lambda}<sub>1</sub>}}{ \eqn{\lambda_1}} (progression rate) parameter (must match column name(s) in the input data)
 #' @param l2_x A vector containing the names of covariates used in the \eqn{\lambda_2} (clearance rate) parameter (must match column name(s) in the input data)
 #' @param pi_x A vector containing the names of covariates used in the \eqn{\pi} parameter (probability of prevalent disease) (must match column name(s) in the input data)
