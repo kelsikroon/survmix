@@ -374,13 +374,13 @@ short.em.h <- function(l1_x, l2_x, pi_x, data, short.epsilon=1e-1, silent=T){
 }
 
 
-#' Simulates cervical cancer screening data
-#'
+
 #' @importFrom stats D na.omit rexp rnorm runif
 #' @importFrom utils tail
 #' @importFrom Rlab rbern
 NULL
 
+#' Screening data simulator
 #'
 #' Simulates cervical cancer screening data with user-specified parameters. Useful for validating that the model is able to recover the true parameter values. Currently it is only possible to simulate
 #' data with the baseline covariates age (older or younger than 40), HPV genotype (HPV16 positive or negative), and cytology (normal/ abnormal).
