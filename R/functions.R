@@ -380,8 +380,8 @@ short.em.h <- function(l1_x, l2_x, pi_x, data, short.epsilon=1e-1, silent=T){
 #' @importFrom utils tail
 #' @importFrom Rlab rbern
 NULL
-#> NULL
 
+#'
 #' Simulates cervical cancer screening data with user-specified parameters. Useful for validating that the model is able to recover the true parameter values. Currently it is only possible to simulate
 #' data with the baseline covariates age (older or younger than 40), HPV genotype (HPV16 positive or negative), and cytology (normal/ abnormal).
 #'
@@ -398,7 +398,7 @@ NULL
 
 #' @export
 #'
-cervmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5){
+survmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5){
   # Function to simulate data with baseline characteristics
   # Inputs:
   # n = sample size,
@@ -490,9 +490,9 @@ cervmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5)
 }
 
 
-#' Competing Cause Prevalence-Incidence Mixture Models
+#' Biologically-driven Prevalence-Incidence Mixture Models
 #'
-#' This function fits Competing Cause Prevalence-Incidence mixture models to interval-censored cervical cancer screening data and obtains parameter estimates.
+#' This function fits Biologically-driven Prevalence-Incidence mixture models to interval-censored cervical cancer screening data and obtains parameter estimates.
 #' It is possible for the user to select the covariates that will be used for each parameter.
 
 #' @param l1_x A vector containing the names of covariates used in the \ifelse{html}{\out{&lambda<sub>1</sub>}}{ \eqn{\lambda_1}} (progression rate) parameter (must match column name(s) in the input data)
@@ -518,11 +518,11 @@ cervmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5)
 #' @export
 #'
 #' @examples
-#' sim_dat <- cervmix.simulator(2000, c("hpv"), c(), c(),
+#' sim_dat <- survmix.simulator(2000, c("hpv"), c(), c(),
 #'                      c(exp(-5), -3, 2, -2, 0.25), show_prob = 0.9, i=5)
-#' cervmix.fit(c("hpv"), c(), c(), sim_dat, silent=FALSE)
+#' survmix.fit(c("hpv"), c(), c(), sim_dat, silent=FALSE)
 
-cervmix.fit <- function(l1_x, l2_x, pi_x, data, num.runs=30, short.epsilon=1e-1, epsilon=1e-8, silent=T){
+survmix.fit <- function(l1_x, l2_x, pi_x, data, num.runs=30, short.epsilon=1e-1, epsilon=1e-8, silent=T){
   short.inits <- list()
   for (i in 1:num.runs){
     short.inits[[i]] <- short.em.h(l1_x, l2_x, pi_x, data,  short.epsilon=1e-1, silent)[c("theta.hat", "log.likelihood")]
@@ -535,16 +535,16 @@ cervmix.fit <- function(l1_x, l2_x, pi_x, data, num.runs=30, short.epsilon=1e-1,
 }
 
 
-#' Competing Cause Prevalence-Incidence Mixture Model Predictions
+#' Biologically-driven Prevalence-Incidence Mixture Model Predictions
 #' @param l1_x A vector containing the names of covariates used in the \ifelse{html}{\out{\eqn{\lambda}<sub>1</sub>}}{ \eqn{\lambda_1}} (progression rate) parameter (must match column name(s) in the input data)
 #' @param l2_x A vector containing the names of covariates used in the \eqn{\lambda_2} (clearance rate) parameter (must match column name(s) in the input data)
 #' @param pi_x A vector containing the names of covariates used in the \eqn{\pi} parameter (probability of prevalent disease) (must match column name(s) in the input data)
 #' @param data Data set of covariates from which to make the predictions.
 #' @param time.points Numeric vector of time points used to make cumulative risk predictions
-#' @param theta.hat Parameter estimates for the model to be used (output from CCmixture.fit)
+#' @param theta.hat Parameter estimates for the model to be used (output from survmix.fit)
 #'
 #' @export
-cervmix.predict <- function(l1_x, l2_x, pi_x, data, time.points, theta.hat){
+survmix.predict <- function(l1_x, l2_x, pi_x, data, time.points, theta.hat){
   h <- exp(theta.hat[1])
   theta.hat <- theta.hat[-1]
 
