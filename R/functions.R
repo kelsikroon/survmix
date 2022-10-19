@@ -565,7 +565,6 @@ survmix.predict <- function(l1_x, l2_x, pi_x, data, time.points, theta.hat){
   }else if (n3 > 1){
     p <- as.numeric(exp(data3 %*% theta.hat[(n1+n2+1):(n1+n2+n3)])/(1+exp(data3 %*% theta.hat[(n1+n2+1):(n1+n2+n3)])))
   }
-
   prob <- p + (1-p)*(1 - exp(-h*time.points) + exp(-h*time.points)*g(l1, l2, time.points))
   return(prob)
 }
