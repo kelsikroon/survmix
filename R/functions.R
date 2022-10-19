@@ -492,7 +492,7 @@ survmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5)
 
 #' Model Fitting
 #'
-#' This function fits Biologically-driven Prevalence-Incidence mixture models to interval-censored cervical cancer screening data and obtains parameter estimates.
+#' This function fits our biologically-driven Prevalence-Incidence mixture model to interval-censored cervical cancer screening data and obtains parameter estimates.
 #' It is possible for the user to select the covariates that will be used for each parameter.
 
 #' @param l1_x A vector containing the names of covariates used in the \ifelse{html}{\out{&lambda<sub>1</sub>}}{ \eqn{\lambda_1}} (progression rate) parameter (must match column name(s) in the input data)
