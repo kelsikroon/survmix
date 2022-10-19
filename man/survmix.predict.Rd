@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{survmix.predict}
 \alias{survmix.predict}
-\title{Biologically-driven Prevalence-Incidence Mixture Model Predictions}
+\title{Model Predictions}
 \usage{
 survmix.predict(l1_x, l2_x, pi_x, data, time.points, theta.hat)
 }
@@ -20,5 +20,5 @@ survmix.predict(l1_x, l2_x, pi_x, data, time.points, theta.hat)
 \item{theta.hat}{Parameter estimates for the model to be used (output from survmix.fit)}
 }
 \description{
-Biologically-driven Prevalence-Incidence Mixture Model Predictions
+Model Predictions
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{survmix.fit}
 \alias{survmix.fit}
-\title{Biologically-driven Prevalence-Incidence Mixture Models}
+\title{Model Fitting}
 \usage{
 survmix.fit(
   l1_x,
