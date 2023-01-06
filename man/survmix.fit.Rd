@@ -46,7 +46,7 @@ The output is a list containing the following elements:
 }
 }
 \description{
-This function fits Biologically-driven Prevalence-Incidence mixture models to interval-censored cervical cancer screening data and obtains parameter estimates.
+This function fits our biologically-driven Prevalence-Incidence mixture model to interval-censored cervical cancer screening data and obtains parameter estimates.
 It is possible for the user to select the covariates that will be used for each parameter.
 }
 \examples{
