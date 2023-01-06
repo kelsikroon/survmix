@@ -236,30 +236,31 @@ mstep.h <- function(current_par, expected_z, n1, n2, n3, data1, data2, data3, da
 #   - data3: matrix with columns corresponding to the covariates used in the prevalent probability parameter
 #   - data_int: data frame with columns (1) left, (2) right, and (3) z, representing the left and right interval
 #               and the prevalent/incident indicator variable
-#   -h: value of background risk for all women
 # Output:
 #   - value of the log-likelihood for the current parameter values
 log.likelihood.h <- function(current_par,  data1, data2, data3, data_int){
   left <- data_int[[1]] # left intervals from the data
   right <- data_int[[2]] # right intervals from the data
-  z <- data_int[[3]]
+  z <- data_int[[3]] # prevalent/incident indicator from the data
 
-  h <- exp(current_par[1])
-  current_par <- current_par[-1]
+  h <- exp(current_par[1]) # store current value of background risk
+  current_par <- current_par[-1] # remove background risk from current parameters since we stored it in the above line
 
-  n1 <- ncol(data1)
-  n2 <- ncol(data2)
-  n3 <- ncol(data3)
+  n1 <- ncol(data1) # find number of covariates for lambda1
+  n2 <- ncol(data2) # find number of covariates for lambda2
+  n3 <- ncol(data3) # find number of covariates for pi
 
-  l1 <- exp(data1 %*% current_par[1:n1])
-  l2 <- exp(data2 %*% current_par[(n1+1):(n1+n2)])
+  l1 <- exp(data1 %*% current_par[1:n1]) # create current lambda 1 vector for each value in the data
+  l2 <- exp(data2 %*% current_par[(n1+1):(n1+n2)]) # create current lambda 2 vector for each value in the data
   if (n3 > 1) {
+    # if there are covariates for pi then calculate pi for each data value using transformation from logit
     p <- exp(data3 %*% current_par[(n1+n2+1):(n1+n2+n3)])/(1+exp(data3 %*% current_par[(n1+n2+1):(n1+n2+n3)]))
   }else if (n3 == 1) {
+    # if there are no covariates for pi (n==1 since only intercept), then calculate pi for each data value
     p <- data3 %*% current_par[n1+n2+n3]
   }
 
-  llk <- rep(0, length(right))
+  llk <- rep(0, length(right)) # create empty vector to store log-likelihood values
   llk[which(right==0)] <- I(log(p))[which(right==0)] # (same as z=1)
   llk[which(z==0 & right<Inf)] <- I(log((1-p)*((1- exp(-h*right) + exp(-h*right)*g(l1, l2, right)) -
                                                  (1-exp(-h*left) + exp(-h*left)*g(l1, l2, left)))))[which(z==0 & right <Inf)]
@@ -486,7 +487,7 @@ survmix.simulator <- function(n, l1_x, l2_x, pi_x, params, show_prob = 0.9, i=5)
   # rounds were NA (very rare, this is just to avoid errors in case it happens)
   right[is.na(right)] <- Inf
 
-  return(data.frame(left, right, z = z, age = age, hpv = hpv, cytology))
+  return(data.frame(left, right, z = z, age = age, hpv = hpv, cyt=cytology))
 }
 
 
